@@ -1,0 +1,59 @@
+{% extends 'lg.html' %}
+{% block title %}
+Payment
+{% endblock title %}
+{% block body %}
+<section class="container forms">
+    <div class="form login">
+        <div class="form-content">
+            <header>Registration</header>
+            <form method="post">
+                {% csrf_token %}
+                <div class="field input-field">
+                    <input type="text" placeholder="Full name" class="input" name="username">
+                </div>
+                <div class="field input-field">
+                    <input type="email" placeholder="Email" class="input" name="email">
+                </div>
+                <div class="field input-field">
+                    <input type="txet" placeholder="Age" class="input" name="age">
+                </div>
+                <div class="field input-field">
+                    <input type="txet" placeholder="Phone number" class="input" name="phone">
+                </div>
+                <div class="field button-field">
+                    <button type="submit" id="rzp-button1">Procced To Pay</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<section class="pay">
+     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            var options = {
+                "key":"{{api_key}}",
+                "name": "Gymso Fitness", //your business name
+                "description": "Buy Premium",
+                "image": "/static/fevicon.jpg",
+                "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "callback_url": "{% url 'about-us' %}",
+                "prefill": {
+                    "name": "Gaurav Kumar", //your customer's name
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9000090000"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            document.getElementById('rzp-button1').onclick = function (e) {
+                rzp1.open();
+                e.preventDefault();
+            }
+        </script>
+</section>
+{% endblock body %}
